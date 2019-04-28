@@ -11,16 +11,16 @@ public class PollData
     private String name;
     private int yes;
     private int no;
-    private int abstain;
+    private int indifferent;
     private List<String> votedYes;
     private List<String> votedNo;
-    private List<String> abstained;
+    private List<String> votedIndifferent;
 
     public PollData(String username, String token, String name, String owner, String repo, int projectId)
     {
         votedYes = new ArrayList<>();
         votedNo = new ArrayList<>();
-        abstained = new ArrayList<>();
+        votedIndifferent = new ArrayList<>();
         this.name = name;
         try
         {
@@ -59,9 +59,9 @@ public class PollData
 
         var clone = new ArrayList<>(votedNo);
         clone.retainAll(votedYes);
-        abstained.addAll(clone);
+        votedIndifferent.addAll(clone);
 
-        abstained.forEach(a->
+        votedIndifferent.forEach(a->
         {
            yes--;
            no--;
@@ -79,10 +79,10 @@ public class PollData
         return no;
     }
 
-    public int getAbstain()
+    public int getIndifferent()
     {
-        this.abstain = abstained.size();
-        return this.abstain;
+        this.indifferent = votedIndifferent.size();
+        return this.indifferent;
     }
 
     public int getYes()
@@ -92,7 +92,7 @@ public class PollData
 
     public int getTotal()
     {
-        return this.yes + this.no + this.abstain;
+        return this.yes + this.no + this.indifferent;
     }
 
     public String getName()

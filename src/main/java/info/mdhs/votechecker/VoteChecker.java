@@ -21,7 +21,7 @@ public class VoteChecker
             System.out.println("===============================");
             System.out.println(pd.getYes() + ": Voted in favor.");
             System.out.println(pd.getNo() + ": Voted in opposition.");
-            System.out.println(pd.getAbstain() + ": abstained from voting.");
+            System.out.println(pd.getIndifferent() + ": Are indifferent");
             System.out.println(pd.getTotal() + ": Total votes.");
             System.out.println("===============================");
             System.out.println();
