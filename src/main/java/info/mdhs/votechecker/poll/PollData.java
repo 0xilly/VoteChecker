@@ -67,6 +67,8 @@ public class PollData
            no--;
         });
 
+        this.indifferent = votedIndifferent.size();
+
     }
 
     public void writeData()
@@ -81,7 +83,6 @@ public class PollData
 
     public int getIndifferent()
     {
-        this.indifferent = votedIndifferent.size();
         return this.indifferent;
     }
 
