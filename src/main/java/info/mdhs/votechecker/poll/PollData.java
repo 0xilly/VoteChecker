@@ -25,7 +25,7 @@ public class PollData
         try
         {
             GitHub github;
-            if (username != null || token != null)
+            if (username != null && token != null)
             {
                 github = GitHub.connect(username, token);
             } else
