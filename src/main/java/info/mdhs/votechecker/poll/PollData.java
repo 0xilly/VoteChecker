@@ -51,17 +51,21 @@ public class PollData
                     votedNo.add(i.getUser().getLogin());
                     no++;
                 }
-
-                if (i.getContent() == ReactionContent.HEART)
-                {
-                    abstained.add(i.getUser().getLogin());
-                    abstain++;
-                }
             });
         } catch (Exception e)
         {
             e.printStackTrace();
         }
+
+        var clone = new ArrayList<>(votedNo);
+        clone.retainAll(votedYes);
+        abstained.addAll(clone);
+
+        abstained.forEach(a->
+        {
+           yes--;
+           no--;
+        });
 
     }
 
@@ -77,7 +81,8 @@ public class PollData
 
     public int getAbstain()
     {
-        return abstain;
+        this.abstain = abstained.size();
+        return this.abstain;
     }
 
     public int getYes()
