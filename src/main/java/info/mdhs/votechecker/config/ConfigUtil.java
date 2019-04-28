@@ -29,7 +29,7 @@ public class ConfigUtil
             issues.owner = "user/org";
             issues.repo = "repo";
 
-            conf.issues = new Issue[] {issues};
+            conf.issues = new Issue[]{issues};
             gson = gb.setPrettyPrinting().serializeNulls().create();
 
             var confStr = gson.toJson(conf);
@@ -46,7 +46,8 @@ public class ConfigUtil
             System.exit(2);
         }
 
-        try (var reader = Files.newBufferedReader(confFile)) {
+        try (var reader = Files.newBufferedReader(confFile))
+        {
             gson = new Gson();
             config = gson.fromJson(reader, Config.class);
         } catch (IOException e)

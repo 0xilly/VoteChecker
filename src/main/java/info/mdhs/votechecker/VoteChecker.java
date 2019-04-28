@@ -9,7 +9,6 @@ import java.util.Arrays;
 public class VoteChecker
 {
 
-
     public static void main(String[] args)
     {
 
@@ -26,9 +25,6 @@ public class VoteChecker
             System.out.println(pd.getTotal() + ": Total votes.");
             System.out.println("===============================");
             System.out.println();
-
         });
-
     }
-
 }

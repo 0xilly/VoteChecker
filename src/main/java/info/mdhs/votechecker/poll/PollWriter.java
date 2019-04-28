@@ -17,7 +17,6 @@ public class PollWriter
         var files = Paths.get(pollData.getName() + ".json");
 
         gson = gb.setPrettyPrinting().create();
-
         var confStr = gson.toJson(pollData);
 
         try

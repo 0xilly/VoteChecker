@@ -25,7 +25,7 @@ public class PollData
         try
         {
             GitHub github;
-            if (username != null || token !=null)
+            if (username != null || token != null)
             {
                 github = GitHub.connect(username, token);
             } else
@@ -39,16 +39,9 @@ public class PollData
 
             reactions.forEach(i ->
             {
-                try
-                {
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
 
                 if (i.getContent() == ReactionContent.PLUS_ONE)
                 {
-
                     votedYes.add(i.getUser().getLogin());
                     yes++;
                 }
