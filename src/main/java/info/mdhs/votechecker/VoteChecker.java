@@ -18,12 +18,13 @@ public class VoteChecker
             var pd =new PollData(config.user, config.token, i.title, i.owner, i.repo, i.id);
             pd.writeData();
             System.out.println(pd.getName());
-            System.out.println("===============================");
+            System.out.println("=====================================");
             System.out.println(pd.getYes() + ": Voted in favor.");
             System.out.println(pd.getNo() + ": Voted in opposition.");
             System.out.println(pd.getIndifferent() + ": Are indifferent");
             System.out.println(pd.getTotal() + ": Total votes.");
-            System.out.println("===============================");
+            System.out.println(pd.getLessThanAweek().size() + ": Accounts less than a week old.");
+            System.out.println("=====================================");
             System.out.println();
         });
     }

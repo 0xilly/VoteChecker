@@ -3,6 +3,7 @@ package info.mdhs.votechecker.poll;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.ReactionContent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,9 @@ public class PollData
     private int yes;
     private int no;
     private int indifferent;
-    private List<String> votedYes;
-    private List<String> votedNo;
-    private List<String> votedIndifferent;
+    private List<User> votedYes;
+    private List<User> votedNo;
+    private List<User> votedIndifferent;
 
     public PollData(String username, String token, String name, String owner, String repo, int projectId)
     {
@@ -42,29 +43,37 @@ public class PollData
 
                 if (i.getContent() == ReactionContent.PLUS_ONE)
                 {
-                    votedYes.add(i.getUser().getLogin());
+                    votedYes.add(new User(i, i.getUser()));
+//                    votedYes.add(i.getUser().getLogin());
                     yes++;
                 }
 
                 if (i.getContent() == ReactionContent.MINUS_ONE)
                 {
-                    votedNo.add(i.getUser().getLogin());
+                    votedNo.add(new User(i, i.getUser()));
                     no++;
                 }
             });
-        } catch (Exception e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
 
-        var clone = new ArrayList<>(votedNo);
-        clone.retainAll(votedYes);
-        votedIndifferent.addAll(clone);
+        votedYes.forEach(vy->votedNo.forEach(vn->
+        {
+            if (vy.name.equals(vn.getName()))
+            {
+                votedIndifferent.add(vy);
+            }
+        }));
+
 
         votedIndifferent.forEach(a->
         {
-           yes--;
-           no--;
+            votedNo.remove(a);
+            votedYes.remove(a);
+            yes--;
+            no--;
         });
 
         this.indifferent = votedIndifferent.size();
@@ -99,5 +108,25 @@ public class PollData
     public String getName()
     {
         return this.name;
+    }
+
+    public List<User> getLessThanAweek()
+    {
+        var combo = new ArrayList<User>();
+
+        combo.addAll(votedNo);
+        combo.addAll(votedYes);
+        combo.addAll(votedIndifferent);
+
+        var retlist = new ArrayList<User>();
+        combo.forEach(i->
+        {
+            if (i.daysBetween <= 7)
+            {
+                retlist.add(i);
+            }
+        });
+
+        return retlist;
     }
 }
